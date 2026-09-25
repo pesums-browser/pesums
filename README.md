@@ -1,1 +1,1 @@
-Pesums Privacy-focused Android browser. Download: https://pesums.com/download
+Pesums Independent Software to End Internet Surveillance
