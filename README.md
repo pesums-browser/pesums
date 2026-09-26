@@ -2,7 +2,7 @@
 
 **Independent Software to End Internet Surveillance**
 
-Pesums is a privacy-first Android browser built with zero tracking, zero data collection, and zero fingerprinting. It's designed to give you a fast, clean browsing experience that works for you — not against you.
+Pesums is a privacy-first Android browser built with zero tracking, zero data collection, and zero fingerprinting. It's designed to give you a fast, clean browsing experience that works for you not against you.
 
 ## Features
 
@@ -15,7 +15,7 @@ Pesums is a privacy-first Android browser built with zero tracking, zero data co
 
 ## Why Pesums
 
-Most browsers are fast until they phone home — syncing data, checking remote block lists, running telemetry. Pesums skips all of that. Every rule and every block is enforced directly on-device, with no round-trip to a server.
+Most browsers are fast until they phone home syncing data, checking remote block lists, running telemetry. Pesums skips all of that. Every rule and every block is enforced directly on-device, with no round-trip to a server.
 
 ## Download
 
