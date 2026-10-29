@@ -1,127 +1,26 @@
-<!--
-    Pesums — AndroidManifest.xml
-
-    This file is published so anyone can see exactly what Pesums asks
-    permission for, and why. Nothing here is hidden or renamed for the
-    Play Store listing — this is the same manifest the app is built from.
-
-    A general note on how Android permissions work: declaring a
-    permission here only means the app is *allowed to ask* for it.
-    Dangerous permissions (camera, microphone, location, storage, etc.)
-    still show Android's own system prompt at the moment they're needed,
-    and nothing happens unless you tap "Allow" on that prompt yourself.
-    Pesums cannot silently activate any of these — you are always asked
-    first, by Android, not by us.
-
-    See https://pesums.com/privacy-policy-&-terms-of-service for the
-    full privacy policy.
--->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.pesums.browser">
 
-    <!-- Required to load the websites you visit. Without this, Pesums
-         could not function as a browser at all. -->
     <uses-permission android:name="android.permission.INTERNET" />
-
-    <!-- Lets the app check whether you're online (e.g. Wi-Fi vs mobile
-         data vs offline) so it can show the right state in the UI. -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
-    <!-- Lets a task (currently, file downloads) keep running and show
-         its required ongoing notification while the app is in the
-         background, instead of being killed by the system. -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-
-    <!--
-        NOT CURRENTLY USED.
-        Reserved for a future VPN-based feature. No VPN service is
-        started by the current version of Pesums, and this permission
-        grants nothing on its own — Android still requires you to
-        explicitly approve a VPN connection request before any VPN
-        service can run. Kept in the manifest ahead of a planned
-        update rather than added later.
-    -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_VPN" />
-
-    <!-- Lets a file finish downloading without a system notification
-         being forced for every single download. -->
     <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
-
-    <!-- Lets the app show notifications, e.g. download progress or
-         completion. On Android 13+, you are asked to grant this the
-         first time the app tries to show one. -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-
-    <!-- Lets the app ask you, once, whether you want to exempt it from
-         battery optimisation, so a download in progress isn't paused
-         by the system. This shows Android's own opt-in dialog — it is
-         never turned on silently. -->
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
-
-    <!-- Lets you optionally add or remove a shortcut to your home
-         screen (e.g. for a specific site). Only happens if you choose
-         to add one. -->
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
     <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
-
-    <!-- Legacy storage-write permission, only relevant on Android 12L
-         and below (maxSdkVersion 32); newer Android versions use
-         scoped storage instead. Lets you save files you download. -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
-
-    <!-- Lets the app keep the CPU awake briefly during an active
-         download so it isn't interrupted by the device sleeping. -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-
-    <!-- Lets the browser install a file you've downloaded (e.g. an
-         APK). This still requires you to confirm the install through
-         Android's own installer screen. -->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
-
-    <!-- Only used if a website you visit requests your approximate
-         location (e.g. a maps or weather site). This triggers
-         Android's standard location permission prompt — Pesums does
-         not read or transmit your location on its own, and nothing
-         is requested unless a page you're on asks for it. -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
-    <!-- Lets the app see which Wi-Fi network you're connected to
-         (not its content), mainly to support the network-state check
-         above. -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-
-    <!--
-        NOT CURRENTLY USED.
-        Reserved for the same future VPN-based feature as
-        FOREGROUND_SERVICE_VPN above. This permission alone does not
-        let any app run a VPN silently — Android always shows its own
-        "Connection request" dialog before a VPN service can start,
-        and you must approve it directly.
-    -->
-    <uses-permission android:name="android.permission.BIND_VPN_SERVICE" />
-
-    <!-- Only triggered if a website you visit requests video capture
-         (e.g. a video-call site). This is handled the same way any
-         browser handles WebRTC camera/video requests, and Android's
-         own camera permission prompt is what actually grants access. -->
+    <!-- <uses-permission android:name="android.permission.BIND_VPN_SERVICE" /> -->
     <uses-permission android:name="android.permission.VIDEO_CAPTURE" />
-
-    <!-- Only triggered if a website requests audio capture (e.g. a
-         voice-call or dictation site). Same as above — gated by
-         Android's own microphone permission prompt. -->
     <uses-permission android:name="android.permission.AUDIO_CAPTURE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-
-    <!-- Only triggered if a website requests camera access. Pesums
-         never accesses the camera on its own; the system permission
-         prompt only appears when a page you're visiting asks for it,
-         and only if you then tap "Allow" on that prompt. -->
     <uses-permission android:name="android.permission.CAMERA" />
-
-    <!-- Lets the file-download task above run as a "data sync" type
-         foreground service, which is the category Android requires
-         you to declare for this kind of background work. -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
 
 
@@ -140,23 +39,11 @@
             android:name="io.flutter.embedding.android.EnableImpeller"
             android:value="true" />
 
-        <!-- Handles file downloads in the background. Not exported —
-             no other app can start or bind to this service. -->
         <service
             android:name=".DownloadForegroundService"
             android:foregroundServiceType="dataSync"
             android:exported="false" />
 
-        <!--
-            NOT CURRENTLY ACTIVE.
-            Declared ahead of a planned future feature that would use
-            Android's VpnService API for local, on-device filtering.
-            This service is not started by the current version of the
-            app. If and when it is used, Android's own "Connection
-            request" system dialog would still require your explicit
-            approval before it could run — this declaration alone
-            does nothing.
-        -->
         <service
             android:name="com.pesums.browser.Blockadstrackerdatacollection"
             android:permission="android.permission.BIND_VPN_SERVICE"
@@ -170,9 +57,6 @@
         <meta-data android:name="android.webkit.JavaScriptJITEnabled" android:value="true" />
         <meta-data android:name="android.webkit.WebSecurity" android:value="true" />
 
-        <!-- The browser's single main activity. Exported so it can be
-             launched from the home screen and handle links from other
-             apps (see the intent filters below). -->
        <activity
     android:name="com.pesums.browser.MainActivity"
     android:forceDarkAllowed="false"
@@ -185,14 +69,11 @@
 
             <meta-data android:name="flutterEmbedding" android:value="2" />
 
-            <!-- App launcher entry point. -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-            <!-- Pesums' own deep-link scheme (pesums://open/...), used
-                 for in-app links such as shortcuts. -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -200,15 +81,11 @@
                 <data android:scheme="pesums" android:host="open" android:pathPattern=".*" />
             </intent-filter>
 
-            <!-- Lets Pesums appear as a target for the system's
-                 web-search action. -->
             <intent-filter>
                 <action android:name="android.intent.action.WEB_SEARCH" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
-            <!-- Lets Pesums open http/https links from other apps
-                 (e.g. tapping a link in a messaging app). -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -217,10 +94,6 @@
                 <data android:scheme="https" />
             </intent-filter>
 
-            <!-- The following intent filters let Pesums open local
-                 files (from storage, another app, or a download) of
-                 common web-related types: HTML, XHTML, XML, plain
-                 text, and JSON. -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -277,9 +150,6 @@
                 <data android:mimeType="application/json" />
             </intent-filter>
 
-            <!-- Registers Pesums as a handler for .html / .htm / .mhtml
-                 files by extension, for apps that pass a file URI
-                 without a MIME type. -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -315,11 +185,6 @@
 
         </activity>
 
-        <!-- Lets Pesums securely share local files (e.g. a completed
-             download) with other apps via a content:// URI, without
-             exposing raw file paths. Not exported to arbitrary apps —
-             only accessible through the granted URI permissions
-             defined in file_paths. -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
@@ -331,12 +196,6 @@
 
     </application>
 
-    <!-- Package visibility queries (Android 11+). These don't grant
-         access to anything by themselves — they only let Pesums check
-         whether an app capable of handling a given action (e.g.
-         dialling a number, sending an SMS, opening Google Play)
-         exists on your device, so it can show the right option
-         instead of guessing. -->
     <queries>
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT" />
