@@ -18,7 +18,7 @@
 
 <br>
 
-<a href="https://pesums.com/download"><img src="https://img.shields.io/badge/Website-pesums.com-FF7D03?style=for-the-badge" alt="Website"></a>
+<a href="https://pesums.com"><img src="https://img.shields.io/badge/Website-pesums.com-FF7D03?style=for-the-badge" alt="Website"></a>
 <img src="https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Android">
 
 </div>
